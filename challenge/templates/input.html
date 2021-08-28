@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <br>
+    <form method="POST">
+    {% csrf_token %}
+    <div class="form form-table">
+        {{ form }}
+        {% if user.username == "admin" %} <!--관리자 계정이면 버튼 보이게-->
+        <button type="submit" class="btn btn-info right"> Submit </button>
+        {%endif%}
+
+        {% if not user.username == "admin" %}
+        <button type="submit" class="btn btn-info right" disabled> Submit </button>
+        {%endif%}
+    </div>
+    </form>
+</div>
+{% endblock %}

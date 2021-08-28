@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+    
+    .title1 {
+        font-family: 'Black Han Sans', sans-serif;
+        color: rgb(197, 120, 100);
+    }
+
+    a:link,
+    a:visited {
+        color: rgb(109, 109, 109);
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    a:hover,
+    a:active {
+        background-color: rgb(177, 174, 174);
+    }
+
+    a.button1 {
+        font-family: 'Black Han Sans', sans-serif;
+        background-color: rgb(73, 117, 143);
+        color: black;
+        border: 3px solid rgb(51, 51, 51);
+    }
+
+    .t {
+        margin: 2% 10%;
+        padding: 3% 6%;
+        font-family: 'Black Han Sans', sans-serif;
+        color: rgb(104, 104, 104);
+        border: 3px solid rgb(141, 140, 140);
+    }
+
+    .title {
+        padding-top: 10px;
+        font-size: 30px;
+        color: rgb(73, 117, 143);
+    }
+
+    .page {
+        margin-bottom: 5%;
+        text-align: center;
+        font-family: 'Black Han Sans', sans-serif;
+        font-size: 25px;
+        color: rgb(73, 117, 143);
+    }
+
+    .welcome {
+        font-family: 'Black Han Sans', sans-serif;
+        font-size: 25px;
+        color: rgb(105, 105, 105);
+        padding-top:20px;
+        text-align: center;
+    }
+    #search {
+        text-align: center;
+        width:300px;
+    }
+
+    form {
+        text-align: center;
+    }
+
+</style>
+
+<body>
+    <br>
+    <h1 class="title1">Community</h1>
+       <div class="welcome"><a href="{%url 'new' %}">Write</a></div>
+       <br>
+    <form action="{% url 'search' %}" method="post">
+        {% csrf_token %}
+        <input id="search" type="search" placeholder="Search" aria-label="Search" name="find" value="{{find}}">
+        <button class="btn btn-outline-success" type="submit">🔎Search</button>
+      </form>
+
+ 
+
+    {% for post in posts %}
+    <div class="t">
+        {%if post.img %}
+        <img src="{{post.image_thumbnail.url}}">
+        {%endif%}
+        <div class="title">
+            {{post.title}}
+        </div>
+        <br>
+        <a href="{%url 'detail' post.id %}">...more</a>
+    </div>
+    {% endfor %}
+
+
+    <div class="page">
+        {% if posts.has_previous %}
+        <a href="?page=1">1</a>
+        <a href="?page={{posts.previous_page_number}}">◀</a>
+        {% endif %}
+
+        <span>{{posts.number}}</span>
+        <span>of</span>
+        <span>{{posts.paginator.num_pages}}</span>
+
+        {%if posts.has_next%}
+        <a href="?page={{posts.next_page_number}}">▶</a>
+        <a href="?page={{posts.paginator.num_pages}}">{{posts.paginator.num_pages}}</a>
+        {% endif %}
+    </div>
+
+    <br>
+</body>
+{% endblock %}

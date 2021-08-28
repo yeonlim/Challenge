@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Noto+Sans+KR:wght@700&family=Ultra&display=swap');
+   
+    body {
+        text-align: center;
+    }
+
+    .text {
+        border-radius: 20px;
+        font-family: 'Alfa Slab One', 'Noto Sans KR', cursive, sans-serif;
+        margin: 3% 20%;
+        z-index: 2;
+        padding: 40px;
+        background-color: rgb(236, 228, 182);
+        color: rgb(65, 65, 65);
+    }
+
+    h2 {
+        text-align: center;
+        font-family: 'Alfa Slab One', 'Noto Sans KR', cursive, sans-serif;
+    }
+
+    table {
+        font-family: 'Alfa Slab One', 'Noto Sans KR', cursive, sans-serif;
+        text-align: center;
+        margin: auto;
+        padding: auto;
+        font-size: 18px;
+    }
+
+ 
+    #userlist {
+        font-size: 18px;
+        font-family: 'Alfa Slab One', 'Noto Sans KR', cursive, sans-serif;
+        color:rgb(156, 55, 55);
+        text-decoration: underline;
+    }  
+
+    .button1 {
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-family: 'Black Han Sans', sans-serif;
+        background-color: rgb(197, 120, 100);
+        color: rgb(0, 0, 0);
+        border: 3px solid rgb(51, 51, 51);
+    }
+
+</style>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatting</title>
+</head>
+
+<body>
+    <br>
+    <h1>Send message</h1>
+    <br>
+    <div class="form">
+        <form method="post" enctype="multipart/form-data">
+            <span id="userlist" onclick="window.open('userlist','USERLIST','width=300, height=300, menubar=no, status=no, status=no, toolbar=no');">UserList 보기</span>
+            {%csrf_token%}
+            
+            <table>
+                <tr>
+                    <th id="table">받는사람</th>
+                    <td> {{form.to}}</td>
+                </tr>
+                <tr>
+                    <th id="table">내용</th>
+                    <td colspan="2">{{form.body}}</td>
+                </tr>
+            </table>
+            <br><button type="submit" class="button1">Send</button>
+        </form>
+    </div>  
+</body>
+
+</html>
+{% endblock %}

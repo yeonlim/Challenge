@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+
+        h1, h3, .info {
+            font-family: 'Black Han Sans', sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: rgb(197, 120, 100);
+            margin : 2% 0%;
+        }
+        #map {
+            margin:auto;
+        }
+        .info {
+            text-align: center;
+            color :rgb(75, 72, 69);
+            font-size:20px;
+        }
+
+        h3 {
+            margin-top:2%;
+            color: rgb(52, 80, 46);
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>멋사 위치</title>
+    <h1>멋쟁이 사자처럼</h1>
+    <div class="info">
+    HACK YOUR LIFE,<br>
+    프로그래밍으로 당신의 인생을 바꿔보세요
+    </div>
+    <h3>위치</h3>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=5ep6mtzlvu"></script>
+</head>
+
+<body>
+<div id="map" style="width:500px;height:500px;"></div>
+<script>
+// var mapOptions = {
+//     center: new naver.maps.LatLng(37.5123358, 127.0550611),
+//     zoom: 16
+// };
+var HOME_PATH = window.HOME_PATH || '.';
+var cityhall = new naver.maps.LatLng(37.5123358, 127.0550611),
+    map = new naver.maps.Map('map', {
+        center: cityhall,
+        zoom: 15
+    }),
+    marker = new naver.maps.Marker({
+        map: map,
+        position: cityhall
+    });
+
+var contentString = [
+        '<div class="iw_inner">',
+        '   <h3>멋쟁이 사자처럼</h3>',
+        '   <p>서울특별시 강남구 봉은사로 82길 13<br />',
+        '       <a href="https://www.likelion.net/" target="_blank">웹사이트로 이동</a>',
+        '   </p>',
+        '</div>'
+    ].join('');
+
+var infowindow = new naver.maps.InfoWindow({
+    content: contentString,
+    maxWidth: 500,
+    backgroundColor: "#ffffff",
+    borderColor: "#c57864",
+    borderWidth: 3,
+    anchorSize: new naver.maps.Size(30, 30),
+    anchorSkew: true,
+    anchorColor: "#ffffff",
+    pixelOffset: new naver.maps.Point(20, -20)
+});
+
+naver.maps.Event.addListener(marker, "click", function(e) {
+    if (infowindow.getMap()) {
+        infowindow.close();
+    } else {
+        infowindow.open(map, marker);
+    }
+});
+
+// var map = new naver.maps.Map('map', mapOptions);
+</script>
+</body>
+</html>
+
+{% endblock %}

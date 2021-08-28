@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Noto+Sans+KR:wght@700&family=Ultra&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+   body {
+        text-align: center;
+    }
+    .title1 {
+        font-family: 'Alfa Slab One', 'Black Han Sans', sans-serif;
+        color: rgb(73, 117, 143);
+    }
+    form {
+        border-radius: 20px;
+        font-family: 'Alfa Slab One', 'Black Han Sans', sans-serif;
+        position: relative;
+        margin: 3% 10%;
+        z-index: 2;
+        padding: 40px;
+        border:3px solid black;
+    }
+    button{
+        border-radius:5px;
+        padding: 10px 20px;
+        font-family: 'Alfa Slab One', 'Black Han Sans', sans-serif;
+        background-color: rgb(73, 117, 143);
+        color:rgb(43, 40, 40);
+        border:3px solid rgb(51, 51, 51);
+    }
+</style>
+<body>
+    <br>
+    <h1 class="title1">Write</h1>
+    <form action="{%url 'new' %}" method="post" enctype="multipart/form-data">
+        {%csrf_token%} 
+        <h6>{{form.as_p}}</h6>
+        <button type ="submit">submit</button>
+    </form>
+</body>
+{% endblock %}

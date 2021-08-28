@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    h1 {
+        font-family: 'Black Han Sans', sans-serif;
+        color: rgb(73, 117, 143);
+    }
+    .content {
+        margin: 40px 0;
+        
+    }
+    .message {
+        border:3px solid gray;
+        padding:10% 5%;
+        font-family: 'Black Han Sans', sans-serif;
+        font-size: 20px;
+        color:gray;
+    }
+    
+    b {
+        color:rgb(124, 47, 58);
+    }
+
+    .button1 {
+        border-radius:5px;
+        padding: 10px 20px;
+        font-family: 'Black Han Sans', sans-serif;
+        background-color: rgb(243, 199, 208);
+        color:rgb(0, 0, 0);
+        border:3px solid rgb(51, 51, 51);
+    }
+</style>
+<body>
+    <h1>💌My received Messages💌</h1>
+    <br>
+    <a href="{%url 'message'%}" class="button1">▶Send Messaage</a>
+    {% if user.is_authenticated %}
+        {% for d in data %}
+            {% if user.username == d.to_user %}
+            <div class="content">
+                <p class="message">{{d.message}}
+                    <br><br>
+                <b>From. {{d.from_user}}🖊</b> </p>
+             {% endif %}
+        {% endfor %}
+    {% endif %}
+</body>
+
+{% endblock %}

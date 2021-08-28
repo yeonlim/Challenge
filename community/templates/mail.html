@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        text-align: center;
+    }
+
+    form {
+        border-radius: 20px;
+        font-family: 'Alfa Slab One', sans-serif;
+        position: relative;
+        margin: 3% 10%;
+        z-index: 2;
+        padding: 40px;
+        border:3px solid black;
+    }
+    h1 {
+        font-family: 'Black Han Sans', sans-serif;
+        color: rgb(197, 120, 100);
+    }
+
+    .button1 {
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-family: 'Black Han Sans', sans-serif;
+        background-color: rgb(197, 120, 100);
+        color: rgb(0, 0, 0);
+        border: 3px solid rgb(51, 51, 51);
+    }
+
+    p {
+        text-align: center;
+        color: rgb(163, 56, 56);
+        font-size: 20px;
+        font-family: 'Black Han Sans', sans-serif;
+    }
+
+    .message {
+        font-family: 'Black Han Sans', sans-serif;
+        font-size: 20px;
+    }
+</style>
+
+<body>
+    <br>
+    <h1>Mail</h1>
+    <br>
+    <p>페이지 관리자에게 메일을 보낼 수 있습니다.
+        <br>제목, 내용, 자신의 이메일 주소을 적어서 보내주세요!
+    </p>
+    <div>
+        <div class="container">
+            <form action="" method="POST" class="contact-form">
+                {% csrf_token %}
+                <div>
+                    <div class="message">제목</div>
+                    <input type="text" name="subject">
+                </div>
+                <br>
+                <div>
+                    <div class="message">내용</div>
+                    <textarea name="message" cols="60" rows="20"></textarea>
+                </div>
+                <br>
+                <div>
+                    <div class="message">보내는 사람</div>
+                    <input type="text" name="name" value="{{user.username}}" disabled>
+                </div>
+                <br>
+                <div>
+                    <div class="message">자신의 Email</div>
+                    <input type="text" name="email">
+                </div>
+                <br><br>
+                <div>
+                    <input type="submit" class="button1" value="Send Mail">
+                </div>
+            </form>
+        </div>
+</body>
+
+{% endblock %}

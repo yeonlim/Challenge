@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+
+    .title1 {
+        margin-top: 2%;
+        text-align: left;
+        margin-left: 10%;
+        font-family: 'Black Han Sans', sans-serif;
+        color: rgb(197, 120, 100);
+    }
+     
+    textarea {
+        resize: none;
+        width: 60%;
+        height: 30px;
+        
+    }
+
+    form {
+        color:rgb(56, 56, 56);
+        margin-left: 10%;
+        font-family: 'Black Han Sans', sans-serif;
+    }
+
+    .comment {
+        margin-left: 10%;
+        color:rgb(56, 56, 56);
+        font-family: 'Black Han Sans', sans-serif;
+    }
+    #submit {
+        width: 100px;
+    }
+
+
+    h3,
+    h4 {
+        font-family: 'Black Han Sans', sans-serif;
+        color: rgb(73, 117, 143);
+    }
+
+    h3 {
+        margin-left: 10%;
+    }
+
+    h5 {
+        margin: 2% 0%;
+        color: rgb(77, 77, 77);
+        font-family: 'Black Han Sans', sans-serif;
+    }
+
+    .content {
+        background-color: rgba(224, 222, 222, 0.733);
+        padding:2%;
+        margin:2% 10%;
+    }
+
+    .edit {
+        margin-top:3%;
+        font-family: 'Black Han Sans', sans-serif;
+        font-size: 18px;
+    }
+
+    #delete {
+        color:rgb(150, 64, 61);
+    }
+
+    button, input{
+        border-radius: 5px;
+        font-family: 'Black Han Sans', sans-serif;
+        color: rgb(0, 0, 0);
+    }
+</style>
+<h1 class=title1>{{data.title}}</h1>
+
+<div class="content">
+    <h5>{{data.content | linebreaks}}</h5>
+
+        {% if data.img %}
+        <p><img src="{{data.img.url}}" alt="image" width="400" height="400"></p>
+        {% endif %}
+
+        {% if user == data.writer %}
+        <div class="edit"><a href="{% url 'update' data.id %}">수정하기</a>
+            <a href="{% url 'delete' data.id %}">삭제하기</a>
+        </div>
+        {%endif%}
+</div>
+<br><br>
+
+<h3>댓글</h3>
+<form method="POST" action="{% url 'create_comment' data.id %}" id="comment_form">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="확인" id="submit">
+</form>
+<hr>
+{% for comment in comments %}
+<div class="comment">
+    <div class="first_comment">
+      {{comment.author}} : {{comment.body}}
+      {% if user == comment.author %}
+      <a id ="delete" href="{% url 'delete_comment' data.id comment.id%}">삭제</a>
+      {%endif%}
+    </div>
+        <br>
+        {% for re_comment in re_comments %}
+        {% if comment == re_comment.comment_id %}
+        <div class="recomment">
+            ㄴ{{re_comment.author}} : {{re_comment.body}}
+            {% if user == re_comment.author %}
+                <a id ="delete" href="{% url 'delete_comment' data.id re_comment.id%}">삭제</a>
+            {%endif%}
+        </div>
+        <br>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div id="recomment">
+        <form action="{% url 'create_re_comment' data.id comment.id%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+        <button type="submit">대댓글쓰기</button>
+        </form>
+    </div>
+    
+<br>
+    <hr>
+<br>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+{% load static %}
+<style>
+     @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Noto+Sans+KR:wght@700&family=Ultra&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+    
+    .message {
+        font-family: 'Alfa Slab One', 'Black Han Sans', sans-serif;
+    }
+
+    .message {
+        border:3px solid black;
+        border-radius: 30px;
+        margin:3% 20%;
+        padding:3%;
+    }
+
+    #delete {
+        color:rgb(156, 55, 55);
+    }
+   
+</style>
+<br>
+<h1>Detail</h1>
+<div id="form">
+    <div class="message">
+        {{message.body}} <br><br>
+        From. {{message.writer}} <br><br>
+        {{message.pub_date}} <br>
+        <a href="{%url 'chatting_delete' message.id %}" id="delete">delete</a>
+    </div>
+</div>
+
+{%endblock%}
